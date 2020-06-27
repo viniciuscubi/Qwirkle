@@ -1,0 +1,49 @@
+=======================================================================
+Notas sobre o jogo Qwirkle
+======================================================================
+
+Numero de jogadores de 2 a 4 (talvez 1 ou 5)
+
+Sobre as peças:
+
+Cada peça possui uma combinação de forma e cor especifica.
+Existem 6 formas diferentes.
+Existem 6 cores diferentes.
+No total existem 3 cópias de cada combinação distinta totalizando 108 peças
+
+Regras:
+
+As peças que forem inseridas no tabuleiro tem que estar obrigatoriamente adjacentes(ligadas) a pelo menos uma peça já presentes no tabuleiro
+Um jogador pode jogar a quantidade de peças (que estejam na sua mão) que quiser (limite de peças na mão é 6), porem as peças tem que respeitar a mesma caracteristica ou a mesma cor ou a mesma forma
+Todas as peças tem que ser posicionadas em linha reta (podem ser posicionadas de maneira não sequencial)
+Uma linha de uma mesma figura só pode ter uma peça de cada uma das seis cores, da mesma forma que uma linha da mesma cor só pode ter uma peça de cada uma das 6 formas
+Cada linha ou coluna tera no máximo seis peças
+O jogador inicial é o jogador que tiver mais peças de uma mesma forma com cores diferente, ou o jogador que tiver mais pelas de uma mesma cor com formas diferentes(se mais de um jogador tiver a mesma quantidade , quem inicia é o mais velho)
+A cada rodada o jogador tem que recuperar o numero de peças jogadas, pegando novas peças da reserva de forma a ficar com 6 peças na mão
+A mão de peças é secreta para cada jogador(verificar)
+O jogador pode devolver a quantida de quiser de peças de volta a reserva e trocar pela mesma quantidade que enciou porém o jogador não pode jogar na mesma rodada
+
+Fim de jogo:
+O jogo se encerra quando uma pessoa fica sem peças para jogar e não consegue retirar mais peças da reserva de peças, essa pessoa ganha um bonus de 6 pontos adicionais por finalizar o jogo
+
+Pontuação:
+
+A cada peça inserida no tabuleiro o jogador ganha 1 ponto
+A pontuação aumenta em 1 para cada peça presente na linha ou coluna que o jogador inseriu a peça(contando a pontuação na horizontal e vertical)
+
+Bonus:
+Ao completar uma linha ou colunas com 6 peças, o jogador que completou essa coluna ou linha não só recebe os 6 pontos da linha como um acressimo de 6 pontos(fazer um Qwirkle)
+É possível fazer Qwirkle em uma linha e coluna simultaneamente com um bonus de 6 pontos para cada segmento
+
+Ganhador:
+
+Ganha aquele que tiver mais pontos
+Caso um jogador tenha a mesma quantidade de pontos, ganha aquele com menos peças
+Se a regra anterior não for o suficiente para o desenpate o jgoo é declarado empatado
+
+Pensamentos sobre a lógica:
+
+Cada vez que o jogador inserir uma peça deve ser contado no numero de peças na linha incluindo a peça inserida e o numero de peças na culuna inserida incluindo a peça inserida, essa quantidade será  convertida em pontos
+Talvez seja interessante somar a pontuação do jogador a cada peça posicionada, exceto se for na mesma direção ou se for na mesma direção apenas somar mais 1 ponto por peça adicionada junto a pontuação conseguida na primeira peça
+
+
