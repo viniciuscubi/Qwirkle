@@ -1,7 +1,7 @@
 
 
-#define tab_dim 6 //Dimensão base do tabuleiro
-#define str_siz 3
+#define tab_dim 25 //Dimensão base do tabuleiro
+#define qwk_len 6
 
 #define ERRO 0 
 #define SUCESSO 1 
@@ -23,7 +23,7 @@ typedef struct tab_t {
 
 int criar_tab(tab_def *tab_t); //Cria o tabuleiro
 
-int exp_tab(tab_def *tab_t, char ***tab); //Expandir tabuleiro
+int exp_tab(tab_def *tab_t, char ***tab, int lin_L, int col_L); //Expandir tabuleiro
 
 void print_tab(tab_def *tab_t, char ***tab);//Imprime o tabuleiro no terminal
 
