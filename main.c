@@ -15,6 +15,26 @@ print_tab(&tab_t, tab_t.tab);
 exp_tab(&tab_t, tab_t.lin_L, tab_t.col_L);
 printf("\n\n\n");
 print_tab(&tab_t, tab_t.tab);
+exp_tab(&tab_t, tab_t.lin_L, tab_t.col_L);
+printf("\n\n\n");
+
+print_tab(&tab_t, tab_t.tab);
+exp_tab(&tab_t, tab_t.lin_L, tab_t.col_L);
+printf("\n\n\n");
+print_tab(&tab_t, tab_t.tab);
+exp_tab(&tab_t, tab_t.lin_L, tab_t.col_L);
+printf("\n\n\n");
+print_tab(&tab_t, tab_t.tab);
+exp_tab(&tab_t, tab_t.lin_L, tab_t.col_L);
+printf("\n\n\n");
+print_tab(&tab_t, tab_t.tab);
+exp_tab(&tab_t, tab_t.lin_L, tab_t.col_L);
+printf("\n\n\n");
+print_tab(&tab_t, tab_t.tab);
+exp_tab(&tab_t, tab_t.lin_L, tab_t.col_L);
+printf("\n\n\n");
+print_tab(&tab_t, tab_t.tab);
+
 del_tab(&tab_t, tab_t.tab);
 
 

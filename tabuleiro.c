@@ -96,7 +96,10 @@ void print_tab(tab_def *tab_t, char ***tab){
         
         printf("\n");
     }
-
+    tab_t->lin_L = tab_t->tab_H-1;
+    tab_t->col_L = tab_t->tab_com-1;
+    printf("X: %d, Y:%d\n",  tab_t->lin_L,  tab_t->col_L); 
+    tab_t->tab[tab_t->lin_L][tab_t->col_L] = "|X|";
 }
 
 void del_tab(tab_def *tab_t, char ***tab){
