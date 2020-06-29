@@ -26,7 +26,8 @@ int criar_tab(tab_def *tab_t){
 
     tab_t->tab_C = tab_dim;
     tab_t->tab_H = tab_dim;
-
+    tab_t->c_X = 0;
+    tab_t->c_Y = 0;
 
     for(int k = 0; k < tab_t->tab_C; k++){
 
@@ -39,7 +40,7 @@ int criar_tab(tab_def *tab_t){
     }
 
     tab_t->lin_L = 4;
-    tab_t->col_L = 19;
+    tab_t->col_L = 20;
 
     tab_t->tab[tab_t->lin_L][tab_t->col_L] = "|X|";
 
@@ -47,7 +48,7 @@ int criar_tab(tab_def *tab_t){
 
 }
 
-int exp_tab(tab_def *tab_t, char ***tab, int lin_L, int col_L){
+int exp_tab(tab_def *tab_t, int lin_L, int col_L){
    
     int dist_dir = tab_t->tab_C - col_L - 1;
     int dist_esq = col_L;
@@ -57,53 +58,53 @@ int exp_tab(tab_def *tab_t, char ***tab, int lin_L, int col_L){
     
     if(dist_dir <= qwk_len){
         
-
-        tab = (char ***) realloc(tab, sizeof(char***)*2*qwk_len);
-        
-        if(tab == NULL){
-        
-            return ERRO;
-        
-        }
-        
-        for(int k = tab_t->tab_C +1; k < (tab_t->tab_C + 2*qwk_len); k++){
-
-            tab[k] = (char **) malloc(sizeof(char**)*tab_t->tab_H);
-
-            if(tab[k] == NULL){
-                
-                return ERRO;
-
-            }
-
-        }
-
-        for(int k = tab_t->tab_C +1; k < (tab_t->tab_C + 2*qwk_len); k++){
-        
-            for(int l= 0; l < tab_t->tab_H;l++){
-
-               tab_t->tab[k][l] = "|Z|";
-
-            }
-
-        }
-
-
-        for(int k = 0; k < (tab_t->tab_C + 2*qwk_len); k++){
-        
-            for(int l= 0; l < tab_t->tab_H;l++){
-            
-               printf("teste:%s, k:%d, l:%d \n",tab_t->tab[k][l],k,l);
-
-            }
-
-        }
-
+        int tmp = tab_t->tab_H;
+    
         tab_t->tab_C += 2*qwk_len;
+        char ***aux;
+        aux = tab_t->tab;
+        if(aux == NULL){
+            
+            return ERRO;
 
-        printf("tav_C:%d\n",tab_t->tab_C);
+        }
+        
+    for(int i = tmp-1;i < tab_t->tab_H;i++){
+
+        aux[i] = (char **) malloc(sizeof(char**)*tab_t->tab_C);
+
+        if(aux[i] == NULL){
+                return ERRO;
+        }
+    }
+
+        tab_t->tab = aux;
+        
+        printf("teste\n");
+
+        for(int k = 0;k < tab_t->tab_H; k++){
+
+            for(int l = tmp; l < tab_t->tab_C;l++){
+
+                tab_t->tab[k][l] = "|-|";
+        
+             }
+
+         }
+
+        for(int k = 0;k < tab_t->tab_H; k++){
+
+            for(int l = 0; l < tab_t->tab_C;l++){
+
+               printf("teste:%s, K:%d, L:%d \n", tab_t->tab[k][l],k,l);
+        
+             }
+
+         }         
+
+            tab_t->tab[24][0] = "|D|";
+        
         printf("dist_dir: %d\n",dist_dir);
-
     }
 
     if(dist_esq <= qwk_len){
@@ -120,6 +121,46 @@ int exp_tab(tab_def *tab_t, char ***tab, int lin_L, int col_L){
 
     if(dist_bot <= qwk_len){
     
+        int tmp = tab_t->tab_H;
+    
+        tab_t->tab_H += 2*qwk_len;
+        char ***aux;
+        aux = (char ***) malloc(sizeof(char***)*tab_t->tab_H);
+        if(aux == NULL){
+            
+            return ERRO;
+
+        }
+        
+        for(int i = 0;i < tmp;i++){
+
+            aux[i] = tab_t->tab[i];
+            
+        }
+
+
+
+        for(int i = tmp;i < tab_t->tab_H;i++){
+
+          aux[i] = (char **) malloc(sizeof(char**)*tab_t->tab_C);
+
+          if(aux[i] == NULL){
+            return ERRO;
+          }
+        }
+        
+       // for(int i = 0;i < tmp
+        tab_t->tab = aux;
+        
+        for(int k = tmp;k < tab_t->tab_H; k++){
+
+            for(int l = 0; l < tab_t->tab_C;l++){
+
+                tab_t->tab[k][l] = "|-|";
+        
+             }
+
+         }
 
          printf("dist_bot: %d\n",dist_bot);
 
@@ -130,9 +171,9 @@ int exp_tab(tab_def *tab_t, char ***tab, int lin_L, int col_L){
 
 void print_tab(tab_def *tab_t, char ***tab){
     
-    for(int k = 0; k < tab_t->tab_C; k++){
+    for(int k = 0; k < tab_t->tab_H; k++){
 
-        for(int l = 0; l < tab_t->tab_H;l++){
+        for(int l = 0; l < tab_t->tab_C;l++){
 
            printf("%s ", tab_t->tab[k][l]);
             

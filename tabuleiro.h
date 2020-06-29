@@ -10,8 +10,8 @@ typedef struct tab_t {
 
     char ***tab;
     
-    int i;
-    int j;
+    int c_X; //Correção na Coordenada X
+    int c_Y; //Correção na Coordenada Y
 
     int tab_C;
     int tab_H;
@@ -23,7 +23,7 @@ typedef struct tab_t {
 
 int criar_tab(tab_def *tab_t); //Cria o tabuleiro
 
-int exp_tab(tab_def *tab_t, char ***tab, int lin_L, int col_L); //Expandir tabuleiro
+int exp_tab(tab_def *tab_t, int lin_L, int col_L); //Expandir tabuleiro
 
 void print_tab(tab_def *tab_t, char ***tab);//Imprime o tabuleiro no terminal
 
