@@ -1,6 +1,6 @@
 
 
-#define tab_dim 25 //Dimensão base do tabuleiro
+#define tab_dim 108 //Dimensão base do tabuleiro
 #define qwk_len 6
 
 #define ERRO 0 
@@ -10,11 +10,12 @@ typedef struct tab_t {
 
     char ***tab;
     
-    int c_X; //Correção na Coordenada X
-    int c_Y; //Correção na Coordenada Y
+    int prt_com; //Correção no print no comprimento
+    int prt_H; //Correção no print na altura
+    
 
-    int tab_C;
-    int tab_H;
+    int tab_com;//Comprimento do tabuleiro
+    int tab_H;//ALtura do tabuleiro
 
     int lin_L; //Ultima linha jogada
     int col_L; //Ultima coluna jogada

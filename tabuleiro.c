@@ -24,14 +24,14 @@ int criar_tab(tab_def *tab_t){
     }
    
 
-    tab_t->tab_C = tab_dim;
-    tab_t->tab_H = tab_dim;
-    tab_t->c_X = 0;
-    tab_t->c_Y = 0;
+    tab_t->tab_com = tab_dim/2;
+    tab_t->tab_H = tab_dim/2;
+    tab_t->prt_com = tab_dim/2 - 1;
+    tab_t->prt_H = tab_dim/2 - 1;
 
-    for(int k = 0; k < tab_t->tab_C; k++){
+    for(int k = 0; k < tab_dim; k++){
 
-        for(int l = 0; l < tab_t->tab_H;l++){
+        for(int l = 0; l < tab_dim;l++){
 
             tab_t->tab[k][l] = "|-|";
         
@@ -39,8 +39,8 @@ int criar_tab(tab_def *tab_t){
 
     }
 
-    tab_t->lin_L = 4;
-    tab_t->col_L = 20;
+    tab_t->lin_L = 53;
+    tab_t->col_L = 53;
 
     tab_t->tab[tab_t->lin_L][tab_t->col_L] = "|X|";
 
@@ -48,132 +48,47 @@ int criar_tab(tab_def *tab_t){
 
 }
 
+
 int exp_tab(tab_def *tab_t, int lin_L, int col_L){
    
-    int dist_dir = tab_t->tab_C - col_L - 1;
-    int dist_esq = col_L;
-    int dist_top = lin_L;
+    int dist_dir = tab_t->tab_com - col_L - 1;
+    int dist_esq = col_L - tab_t->tab_com + 1;
+    int dist_top = lin_L - tab_t->tab_H + 1;
     int dist_bot = tab_t->tab_H - lin_L - 1;
-
     
-    if(dist_dir <= qwk_len){
-        
-        int tmp = tab_t->tab_H;
+    printf("dir: %d, esq: %d, top: %d, bot: %d\n",dist_dir,dist_esq,dist_top,dist_bot);
+
+    if(dist_dir < 1){
     
-        tab_t->tab_C += 2*qwk_len;
-        char ***aux;
-        aux = tab_t->tab;
-        if(aux == NULL){
-            
-            return ERRO;
+        tab_t->tab_com += 1;
 
-        }
-        
-    for(int i = tmp-1;i < tab_t->tab_H;i++){
-
-        aux[i] = (char **) malloc(sizeof(char**)*tab_t->tab_C);
-
-        if(aux[i] == NULL){
-                return ERRO;
-        }
     }
+    if(dist_esq < 1){
 
-        tab_t->tab = aux;
-        
-        printf("teste\n");
-
-        for(int k = 0;k < tab_t->tab_H; k++){
-
-            for(int l = tmp; l < tab_t->tab_C;l++){
-
-                tab_t->tab[k][l] = "|-|";
-        
-             }
-
-         }
-
-        for(int k = 0;k < tab_t->tab_H; k++){
-
-            for(int l = 0; l < tab_t->tab_C;l++){
-
-               printf("teste:%s, K:%d, L:%d \n", tab_t->tab[k][l],k,l);
-        
-             }
-
-         }         
-
-            tab_t->tab[24][0] = "|D|";
-        
-        printf("dist_dir: %d\n",dist_dir);
-    }
-
-    if(dist_esq <= qwk_len){
-    
-        printf("dist_esq: %d\n",dist_esq);
+        tab_t->prt_com -= 1;
 
     }
 
-    if(dist_top <= qwk_len){
-    
-        printf("dist_top: %d\n",dist_top);
+    if(dist_top < 1){
+
+        tab_t->prt_H -= 1;
 
     }
 
-    if(dist_bot <= qwk_len){
+    if(dist_bot < 1){
+
+        tab_t->tab_H += 1;
     
-        int tmp = tab_t->tab_H;
-    
-        tab_t->tab_H += 2*qwk_len;
-        char ***aux;
-        aux = (char ***) malloc(sizeof(char***)*tab_t->tab_H);
-        if(aux == NULL){
-            
-            return ERRO;
-
-        }
-        
-        for(int i = 0;i < tmp;i++){
-
-            aux[i] = tab_t->tab[i];
-            
-        }
-
-
-
-        for(int i = tmp;i < tab_t->tab_H;i++){
-
-          aux[i] = (char **) malloc(sizeof(char**)*tab_t->tab_C);
-
-          if(aux[i] == NULL){
-            return ERRO;
-          }
-        }
-        
-       // for(int i = 0;i < tmp
-        tab_t->tab = aux;
-        
-        for(int k = tmp;k < tab_t->tab_H; k++){
-
-            for(int l = 0; l < tab_t->tab_C;l++){
-
-                tab_t->tab[k][l] = "|-|";
-        
-             }
-
-         }
-
-         printf("dist_bot: %d\n",dist_bot);
-
     }
-    
+
     return SUCESSO;
 }
 
 void print_tab(tab_def *tab_t, char ***tab){
     
-    for(int k = 0; k < tab_t->tab_H; k++){
+    for(int k = tab_t->prt_H; k < tab_t->tab_H; k++){
 
-        for(int l = 0; l < tab_t->tab_C;l++){
+        for(int l = tab_t->prt_com; l < tab_t->tab_com ;l++){
 
            printf("%s ", tab_t->tab[k][l]);
             
@@ -186,7 +101,7 @@ void print_tab(tab_def *tab_t, char ***tab){
 
 void del_tab(tab_def *tab_t, char ***tab){
 
-    for(int k = 0; k < tab_t->tab_C; k++){
+    for(int k = 0; k < tab_dim; k++){
         
        free(tab_t->tab[k]);
         
