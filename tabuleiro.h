@@ -30,4 +30,4 @@ void print_tab(char ***tab, int prt_H, int tab_H, int prt_com, int tab_com);//Im
 
 void del_tab(tab_def *tab_t, char ***tab);//Deleta a tabela do jogo
 
-void jogar(tab_def *tab_t, int lin, int col);
+void jogar(tab_def *tab_t, int lin, int col); //função provisória
