@@ -136,7 +136,7 @@ void print_tab(char ***tab,int prt_H, int tab_H,int prt_com,int tab_com){
             if(l != tab_com-1){
                  printf(" %s |", tab[k][l]);
              }else{
-                 printf(" %s  ", tab[k][l]);
+                 printf(" %s ", tab[k][l]);
              }
           
         }
@@ -157,11 +157,13 @@ void print_tab(char ***tab,int prt_H, int tab_H,int prt_com,int tab_com){
         for(int l = prt_com; l < tab_com && k != tab_H-1  ; l++){
             printf("-----");
         }
-        printf("\n");
+        if(k == tab_H-1){
 
+        }else{
+          printf("\n");
+        }
     }
     
-    printf("    ");
     for(int k = prt_com; k < tab_com; k++){
 
         int tmp = k-tab_dim/2+1;
