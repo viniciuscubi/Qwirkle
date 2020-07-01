@@ -3,7 +3,6 @@
 #include<string.h>
 
 #include "tabuleiro.h"
-#include "play.h"
 
 #define tips 6 //Numero de tipos de cada classe das peças
 #define t_pecs 108 //Numero total de peças
@@ -12,8 +11,15 @@ void crt_pec(pec_def *pec_p){
 
     char *let[tips] = {"A","B","C","D","E","F"};
     char *num[tips] = {"1","2","3","4","5","6"};
-    char *pecs[108];
+    char **pecs;
+    
+    pecs = (char **) malloc(sizeof(char **)*108);
 
+    for(int i = 0; i < 108;i++){
+
+        pecs[i] = (char *) malloc(sizeof(char *)*2);
+
+    }
     pec_p->let_tip = let;
     pec_p->num_tip = num;
     
@@ -30,17 +36,13 @@ void crt_pec(pec_def *pec_p){
    
                 strcat(str_L, str_N);
 
-                pecs[ctn] = (char *) str_L;
+                strcpy(pecs[ctn],str_L);
                 ctn++;
             }
 
         }
     }
-
-    for(int i = 0; i < t_pecs; i++){
-
-        printf("peça: %s\n",pecs[i]);
     
-    }
-    
+    pec_p->pecs = pecs;
 }
+

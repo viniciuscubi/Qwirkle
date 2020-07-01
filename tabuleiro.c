@@ -58,7 +58,7 @@ int exp_tab(tab_def *tab_t, int lin_L, int col_L){
     int dist_top = lin_L - tab_t->prt_H;
     int dist_bot = tab_t->tab_H - lin_L - 1;
     
-    printf("dir: %d, esq: %d, top: %d, bot: %d\n",dist_dir,dist_esq,dist_top,dist_bot);
+   // printf("dir: %d, esq: %d, top: %d, bot: %d\n",dist_dir,dist_esq,dist_top,dist_bot); //Apenas para teste
 
     if(dist_dir < 1){
     
@@ -191,7 +191,8 @@ void jogar(tab_def *tab_t, int lin, int col){
 
 }
 
-void del_tab(tab_def *tab_t, char ***tab){
+void del_tab(tab_def *tab_t, char **pecs){
+    
 
     for(int k = 0; k < tab_dim; k++){
         
@@ -200,4 +201,13 @@ void del_tab(tab_def *tab_t, char ***tab){
     }
 
     free(tab_t->tab);
+
+    for(int k = 0; k < 108; k++){
+
+        free(pecs[k]);
+    
+    }
+
+    free(pecs);
 }
+
