@@ -44,7 +44,7 @@ int criar_tab(tab_def *tab_t){
     tab_t->lin_L =tab_dim/2-1;
     tab_t->col_L = tab_dim/2-1;
 
-    tab_t->tab[tab_t->lin_L][tab_t->col_L] = "2B";
+    //tab_t->tab[tab_t->lin_L][tab_t->col_L] = "2B";
 
     return SUCESSO;
 
