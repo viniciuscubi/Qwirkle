@@ -116,21 +116,21 @@ for(int k = 0; k < 6; k++){
 int dev_pecs(char *pec, char **pecs_j, char **pecs){
 
     int i = 0;
-    printf("etapa1\n");
+
     while(i < 6 && strcmp(pec,pecs_j[i]) != 0){
         i++;
     }
-    printf("etapa2\n");
+
     if(i == 6){
         return ERRO;
     }
 
     int j = 0;
-    printf("etapa3\n");
+
     while(strcmp("--",pecs[j]) != 0 && j < 108){
         j++;
     }    
-    printf("etapa4\n");
+
     if(strcmp("--",pecs[j]) != 0){
         return ERRO;
     }
