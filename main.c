@@ -2,12 +2,11 @@
 #include"tabuleiro.h"
 
 int main(int argc, char *argv[]){
+
 int x = 0;
 int y = 0;
 char w[2] = "A1";
 
-//ops(w,&x,&y);
-//return 0;// apenas para teste
 tab_def tab_t;
 pec_def pec_p;
 
@@ -31,11 +30,14 @@ for(int k = 0; k < num_j; k++){
     }
     printf("\n");
 }
+printf("Digite a operação\n");
+ops(w,&x,&y,jog_j[0].pecs,pec_p.pecs);
 
-dev_pecs(jog_j[0].pecs[0],jog_j[0].pecs,pec_p.pecs);
+//dev_pecs(jog_j[0].pecs[0],jog_j[0].pecs,pec_p.pecs);
 
-printf("peça trocada: %s \n",jog_j[0].pecs[0]); 
-
+for(int k = 0; k < 6; k++){
+printf(" %s ",jog_j[0].pecs[k]); 
+}
 printf("\n\n\n");
 exp_tab(&tab_t, tab_t.lin_L, tab_t.col_L);
 
