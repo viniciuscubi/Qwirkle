@@ -165,7 +165,7 @@ int ops(char *pec,int *x, int *y,char **pecs_j, char **pecs){
         int i = 6;
         int j = 0;
         int k = 0;
-        while(op[i] != '\0' && j < 6){
+        while(op[i] != '\0' && j < 6){ //Pega as peças que o jogador pediu para serem trocadas
             
             if(op[i] != ' ' && op[i] != '\n'){
 
@@ -199,7 +199,121 @@ int ops(char *pec,int *x, int *y,char **pecs_j, char **pecs){
         return SUCESSO;
 
     }else if(strncmp(op,"jogar",5) == 0){
-        printf("jogar ********\n");
+        printf("jogar\n");
+        
+        char p[2];
+        int  num1;
+        int  num2;
+
+        int i = 5;
+        int od = 0; //numero da ordem
+        int j = 0;
+        int flag1 = 0;
+        int flag2 = 0;
+        int flag3 = 0;
+
+        while(op[i] != '\0' && op[i] != '\n' && od < 4){
+            
+            flag3 = 0;
+
+            if(od == 0 && op[i] >= 'A' && op[i] <= 'F'){
+                p[0] = op[i];
+                flag3 = 1;
+
+
+            }
+
+            if(od == 1 && op[i] >= '1' && op[i] <= '6'){
+                p[1] = op[i];
+                flag3 = 1;
+                
+            }
+            
+
+            if(od == 2 && flag1 == 1 && op[i] == ' '){
+                num1 = num1/10;
+                flag3 = 1;
+
+            }
+
+            if(od == 2 && flag3 == 0 && op[i] >= '1' && op[i] <= '9'){
+                
+                if(flag1 == 0){
+
+                    num1 = (op[i] - '0')*10;
+
+                }else{
+
+                    num1 += (op[i]-'0');
+
+                }
+
+                if(flag1 ==  1){
+
+                    flag3 = 1;
+
+                }
+                flag1 = 1;
+                
+            
+            }
+
+            if(od == 3 && flag2 == 1 && op[i] == ' '){
+                num2 = num2/10;
+                flag3 = 1;
+
+            }
+
+            if(od == 3 && flag3 == 0 && op[i] >= '1' && op[i] <= '9'){                
+                if(flag2 == 0){
+
+                    num2 = (op[i] - '0')*10;
+
+                    if(op[i+1] == '\0' || op[i+1] == '\n'){
+                        
+                        num2 = num2/10;
+                        flag3 = 1;
+
+                    }
+
+                }else{
+
+                    num2 += (op[i] - '0');
+                
+                }
+
+                if(flag2 == 1){
+
+                    flag3  = 1;
+                }
+                flag2 = 1;
+                
+
+            }
+            i++;
+            if(flag3 == 1 || op[i] == '\0'){
+                j = 0;
+                od++;
+            }
+        }
+        if(od == 4){
+
+            *x = num1;
+            *y = num2;
+            strncpy(pec,p,2);
+            
+            printf("pec: %s, x: %d, y: %d\n",pec,*x,*y);
+            return SUCESSO;
+
+
+        }else{
+            printf("ERRO\n");
+            return ERRO;
+
+        }
+        
+
+
     }else if(strncmp(op,"passar",5) == 0){
         printf("passar *******\n");
     }else{
