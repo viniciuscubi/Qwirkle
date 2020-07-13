@@ -58,9 +58,11 @@ int crt_pec(pec_def *pec_p){
 
 int crt_jog(jog_def *jog_j,char **pecs){
 
-    char nome[100];
-    int pontos = 0;
+    char *nome;
+    int pontos  = 0;
     char **pecs_j;
+    
+    nome = (char *) malloc(sizeof(char*)*100);
 
     pecs_j = (char **) malloc(sizeof(char**)*6);
     if(pecs_j == NULL){
@@ -144,7 +146,7 @@ int dev_pecs(char *pec, char **pecs_j, char **pecs){
     return SUCESSO;
 }
 
-int ops(char *pec,int *x, int *y,char **pecs_j, char **pecs){
+int ops(char ***tab,char **pecs_j, char **pecs,int *lin_l, int *col_l){
 
     char op[100];
 
@@ -196,7 +198,7 @@ int ops(char *pec,int *x, int *y,char **pecs_j, char **pecs){
         }
         free(tmp);
 
-        return SUCESSO;
+        return PASSAR;
 
     }else if(strncmp(op,"jogar",5) == 0){
         printf("jogar\n");
@@ -236,15 +238,25 @@ int ops(char *pec,int *x, int *y,char **pecs_j, char **pecs){
 
             }
 
-            if(od == 2 && flag3 == 0 && op[i] >= '1' && op[i] <= '9'){
+            if(od == 2 && flag3 == 0 && op[i] >= '0' && op[i] <= '9'){
                 
                 if(flag1 == 0){
 
                     num1 = (op[i] - '0')*10;
 
-                }else{
+                    if(op[i-1] == '-'){
+                        num1 = num1*(-1);
+                    }
 
-                    num1 += (op[i]-'0');
+                }else{
+                    
+                    if(op[i-2] == '-'){
+                        num1 -= (op[i]-'0');
+                    }else{
+
+                        num1 += (op[i] - '0');
+
+                    }
 
                 }
 
@@ -264,10 +276,17 @@ int ops(char *pec,int *x, int *y,char **pecs_j, char **pecs){
 
             }
 
-            if(od == 3 && flag3 == 0 && op[i] >= '1' && op[i] <= '9'){                
+            if(od == 3 && flag3 == 0 && op[i] >= '0' && op[i] <= '9'){                
                 if(flag2 == 0){
+                    
 
                     num2 = (op[i] - '0')*10;
+
+                    if(op[i-1] == '-'){
+
+                        num2 = num2*(-1);
+
+                    }
 
                     if(op[i+1] == '\0' || op[i+1] == '\n'){
                         
@@ -277,8 +296,13 @@ int ops(char *pec,int *x, int *y,char **pecs_j, char **pecs){
                     }
 
                 }else{
+                    
+                    if(op[i-2] == '-'){
+                        num2 -= (op[i] - '0');
+                    }else{
 
-                    num2 += (op[i] - '0');
+                      num2 += (op[i] - '0');
+                    }
                 
                 }
 
@@ -297,12 +321,40 @@ int ops(char *pec,int *x, int *y,char **pecs_j, char **pecs){
             }
         }
         if(od == 4){
+            
+            int x = num1;// ver numeros negativos
+            int y = num2;
+            char *pec;
 
-            *x = num1;
-            *y = num2;
+            pec = (char *)malloc(sizeof(char *)*2);
+            
+            if(pec == NULL){
+
+                return ERRO;
+
+            }
             strncpy(pec,p,2);
             
-            printf("pec: %s, x: %d, y: %d\n",pec,*x,*y);
+            if(jog_valida(x,y,pec,tab) == ERRO){
+
+                printf("Local inválido\n");
+                return ERRO;
+            }else{
+                int r;
+                r = jogar_jog(x,y,pec,pecs_j,tab,lin_l,col_l);
+
+                if(r == 0){
+
+                    printf("Peça invalida\n");
+                    return ERRO;
+                }
+                
+                rep_pecs(pecs_j,pecs);
+                return SUCESSO;
+            }
+            
+           // printf("pec: %s, x: %d, y: %d\n",pec,x,y);
+            free(pec);
             return SUCESSO;
 
 
@@ -316,11 +368,234 @@ int ops(char *pec,int *x, int *y,char **pecs_j, char **pecs){
 
     }else if(strncmp(op,"passar",5) == 0){
         printf("passar *******\n");
+        return PASSAR;//2 = passar
     }else{
         printf("inváldio\n");
         return ERRO;
     }
 
     return SUCESSO;
+
+}
+
+int jog_valida(int x, int y,char *pec,char ***tab){
+
+   int lin = y + tab_dim/2 - 1;
+   int col = x + tab_dim/2 - 1;
+   int verL[4] = {0,0,0,0};
+   int verN[4] = {0,0,0,0};
+   int dir[4] = {0,0,0,0};
+    
+   printf("lin: %d, col %d\n",lin,col); 
+   if(strcmp(tab[col][lin],"  ") != 0){
+        printf("str: %s\n",tab[col][lin]);
+        printf("ver1\n");
+        return ERRO;
+   }
+   if(x == 0 && y == 0){
+
+        return SUCESSO;
+   }
+
+   if(tab[col+1][lin][0] == pec[0]){
+        verL[0] = 1;
+   }
+   if(tab[col-1][lin][0] == pec[0]){
+        verL[1] = 1;
+   }
+   if(tab[col][lin+1][0] == pec[0]){
+        verL[2] = 1;
+   }
+   if(tab[col][lin-1][0] == pec[0]){
+        verL[3] = 1;
+   }
+
+
+   if(tab[col+1][lin][1] == pec[1]){
+        verN[0] = 1;
+   }
+   if(tab[col-1][lin][1] == pec[1]){
+        verN[1] = 1;
+   }
+   if(tab[col][lin+1][1] == pec[1]){
+        verN[2] = 1;
+   }
+   if(tab[col][lin-1][1] == pec[1]){
+        verN[3] = 1;
+   }
+    
+   
+   for(int i = 0; i < 4; i++){
+
+    dir[i] = verL[i]^verN[i];
+
+   }
+   for(int i = 0; i < 4 ; i++){
+        
+        printf("L: %d, N: %d\n",verL[i],verN[i]);
+
+        if(verL[i] == 1 && verN[i] == 1){
+            
+           printf("ver2\n");
+            return ERRO;
+        }
+
+   }
+
+   if(dir[0] == 1){
+    int i = 1;
+    while(strcmp(tab[col+i][lin],"  ") != 0){
+
+        if(strcmp(tab[col+i][lin],pec) == 0){
+            
+            printf("ver3\n");
+            return ERRO;
+
+        }
+        i++;
+    }
+    if( i > 5){
+        
+        printf("ver4\n");
+        return ERRO;
+    }
+
+   }
+   if(dir[1] == 1){
+
+    int i = 1;
+    while(strcmp(tab[col-i][lin],"  ") != 0){
+
+        if(strcmp(tab[col-i][lin],pec) == 0){
+            printf("ver5\n");
+            return ERRO;
+
+        }
+        i++;
+    }
+    if( i > 5){
+        printf("ver6\n");
+        return ERRO;
+    }
+
+
+
+   }
+   if(dir[2] == 1){
+
+
+    int i = 1;
+    while(strcmp(tab[col][lin+i],"  ") != 0){
+
+        if(strcmp(tab[col][lin+i],pec) == 0){
+            printf("ver7\n");
+            return ERRO;
+
+        }
+        i++;
+    }
+    if( i > 5){
+
+        printf("ver8\n");
+        return ERRO;
+    }
+
+
+   }
+   if(dir[3] == 1){
+
+    int i = 1;
+    while(strcmp(tab[col][lin-i],"  ") != 0){
+
+        if(strcmp(tab[col][lin-i],pec) == 0){
+            printf("ver9\n");
+            return ERRO;
+
+        }
+        i++;
+    }
+    if( i > 5){
+        printf("ver10\n");
+        return ERRO;
+    }
+
+
+
+   }
+    int tmp = 0;
+    for(int i = 0; i < 4;i++){
+        
+        if(verL[i] == 1 || verN[i] == 1){
+            
+            tmp = 1;
+        }
+    }
+    if(tmp == 1){
+
+        return SUCESSO;
+    }else{
+
+        return ERRO;
+
+    }
+}
+
+int jogar_jog(int x, int y, char *pec, char **pecs_j, char ***tab,int *lin_l, int *col_l){
+    
+    int flag = 0;
+    int i = 0;
+    int lin = y + tab_dim/2 -1;
+    int col =  x + tab_dim/2 -1;
+    char *str;
+
+    str = (char *)malloc(sizeof(char *)*2);
+    if(str == NULL){
+
+        return ERRO;
+    }
+
+    //printf("jogar col: %d , lin %d\n",col,lin);
+    for(i = 0; i < 6;  i++){
+
+        if(strcmp(pec, pecs_j[i]) == 0){
+
+           // printf("ver1\n");
+            flag  = 1;
+            break;    
+
+        }
+        
+    }
+    
+    if(flag == 1){
+        //printf("ver2\n");
+        strcpy(str,pecs_j[i]);
+        tab[lin][col] = str;
+        //printf("ver3\n");
+        strcpy(pecs_j[i],"--");
+        *lin_l = lin;
+        *col_l = col;
+
+    }else{
+
+        return ERRO;
+    }
+
+
+
+
+}
+void get_int(int *num){
+
+
+    int flag = 0;
+    char str[100];
+
+    fgets(str,100,stdin);
+
+    *num = atoi(str);
+
+    int i = 0;
+
 
 }

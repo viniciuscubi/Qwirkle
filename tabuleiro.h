@@ -4,7 +4,8 @@
 #define qwk_len 6
 
 #define ERRO 0 
-#define SUCESSO 1 
+#define SUCESSO 1
+#define PASSAR 2
 
 typedef struct tab_t {
 

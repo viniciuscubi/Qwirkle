@@ -3,53 +3,86 @@
 
 int main(int argc, char *argv[]){
 
-int x = 0;
-int y = 0;
-char w[2] = "A1";
 
 tab_def tab_t;
 pec_def pec_p;
 
-int num_j;
-//scanf("%d",&num_j);
+int num_j = 0;
+printf("Insira o número de jogadores\n");
 
-num_j = 4 ;
+get_int(&num_j);
+while(num_j <= 0){
+    printf("Número de jogadores inválido!!!\n");
+    get_int(&num_j);
+}
+
 jog_def jog_j[num_j];
-
 crt_pec(&pec_p);
-
 criar_tab(&tab_t);
 
 for(int k = 0; k < num_j; k++){
 
-    printf("Jogador #%d - ",k+1);
+    printf("Jogador: #%d - ",k+1);
     crt_jog(&jog_j[k],pec_p.pecs);
-    printf("peças:\n");
+    printf("Suas peças são:\n");
     for(int j = 0;j < 6;j++){
         printf(" %s ",jog_j[k].pecs[j]);
     }
     printf("\n");
 }
-printf("Digite a operação\n");
-ops(w,&x,&y,jog_j[0].pecs,pec_p.pecs);
 
-//dev_pecs(jog_j[0].pecs[0],jog_j[0].pecs,pec_p.pecs);
+int j = 0;
+while(1){
+    
+    printf("\n");
+    printf("Jogo Qwirkle:\n");
+    printf("========================\n");
+    exp_tab(&tab_t, tab_t.lin_L, tab_t.col_L);
+    printf("\n");
+    
+    for(int i = 0; i < num_j; i++){
+        
+        printf("Jogador: %s (score %d) :",jog_j[i].nome,jog_j[i].pontos);
 
-for(int k = 0; k < 6; k++){
-printf(" %s ",jog_j[0].pecs[k]); 
+        for(int k = 0; k < 6; k++){
+            
+            printf(" %s",jog_j[i].pecs[k]);
+        
+        }
+        printf("\n");
+        
+    }
+    printf("========================\n");
+    printf("Jogada de %s\n",jog_j[j].nome);
+    
+    printf("Peças disponíveis:");
+
+    for(int i = 0; i < 6; i++){
+
+        printf(" %s",jog_j[j].pecs[i]);
+    }
+    printf("\n");
+
+    int tmp = 0;
+    while(tmp != 2){
+        printf("Opções: Jogar P1 x y | passar | trocar P1 P2...P6\n");
+        tmp = ops(tab_t.tab,jog_j[j].pecs,pec_p.pecs, &tab_t.lin_L, &tab_t.col_L);
+        printf("========================\n");
+        exp_tab(&tab_t, tab_t.lin_L, tab_t.col_L);
+        printf("========================\n");
+
+    }
+
+    j++;
+
+    if(j == num_j){
+
+        j = 0;
+    }
+
 }
-printf("\n\n\n");
-exp_tab(&tab_t, tab_t.lin_L, tab_t.col_L);
-
-jogar(&tab_t,0,0);
 
 printf("\n\n\n");
-exp_tab(&tab_t, tab_t.lin_L, tab_t.col_L);
-
-jogar(&tab_t,1,0);
-
-printf("\n\n\n");
-exp_tab(&tab_t, tab_t.lin_L, tab_t.col_L);
 
 for(int i = 0; i < 108; i++){
     

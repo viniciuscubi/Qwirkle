@@ -16,6 +16,7 @@ typedef struct jog_j{
 
 }jog_def;
 
+void get_int(int *num);
 
 int crt_pec(pec_def *pec_p); //Cria as peças do jogo
 
@@ -25,4 +26,9 @@ int rep_pecs(char **pecs_j, char **pecs); //Repassa as peças ao jogador
 
 int dev_pecs(char *pec, char **pecs_j, char **pecs); //Devolve as peças do jogador ao montante e retorna novas peças ao jogador
 
-int ops(char *pec,int *x,int *y, char **pecs_j, char **pecs); //Le a operação escrita pelo jogador e retorna um valor relativo a isso
+int ops(char ***tab, char **pecs_j, char **pecs, int *lin_l, int *col_l); //Le a operação escrita pelo jogador e retorna um valor relativo a isso
+
+int jog_valida(int x, int y,char *pec,char ***tab);//Função para verificar a validade da jogada
+
+int jogar_jog(int x, int y, char *pec, char **pecs_j, char ***tab, int *lin_l, int *col_l);
+

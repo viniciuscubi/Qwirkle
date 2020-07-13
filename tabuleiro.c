@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 #include"tabuleiro.h"
 
 int criar_tab(tab_def *tab_t){
@@ -187,12 +188,22 @@ void jogar(tab_def *tab_t, int lin, int col){
     col += tab_dim/2 - 1;
     tab_t->lin_L = lin;
     tab_t->col_L = col;
-    tab_t->tab[lin][col] = "3C";
+    
+    tab_t->tab[lin][col] = "A1";
 
 }
 
 void del_tab(tab_def *tab_t, char **pecs){
     
+    for(int k =0; k < tab_dim; k++){
+
+        for(int i = 0; k <tab_dim; k++){
+            
+            if(strcmp(tab_t->tab[k][i],"  ") != 0){
+                free(tab_t->tab[k][i]);
+            }    
+        }
+    }
 
     for(int k = 0; k < tab_dim; k++){
         
