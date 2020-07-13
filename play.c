@@ -379,17 +379,20 @@ int ops(char ***tab,char **pecs_j, char **pecs,int *lin_l, int *col_l){
 }
 
 int jog_valida(int x, int y,char *pec,char ***tab){
-
-   int lin = y + tab_dim/2 - 1;
-   int col = x + tab_dim/2 - 1;
+    
+   int lin = 0;
+   int col = 0;
+   lin = y + tab_dim/2 - 1;
+   col = x + tab_dim/2 - 1;
    int verL[4] = {0,0,0,0};
    int verN[4] = {0,0,0,0};
    int dir[4] = {0,0,0,0};
     
-   printf("lin: %d, col %d\n",lin,col); 
-   if(strcmp(tab[col][lin],"  ") != 0){
-        printf("str: %s\n",tab[col][lin]);
-        printf("ver1\n");
+  // printf("lin: %d, col %d\n",lin,col);
+  // printf("y: %d, x: %d\n",y,x);
+   if(strcmp(tab[lin][col],"  ") != 0){
+       // printf("str: %s\n",tab[lin][col]);
+       // printf("ver1\n");
         return ERRO;
    }
    if(x == 0 && y == 0){
@@ -397,34 +400,36 @@ int jog_valida(int x, int y,char *pec,char ***tab){
         return SUCESSO;
    }
 
-   if(tab[col+1][lin][0] == pec[0]){
+   if(tab[lin+1][col][0] == pec[0]){
         verL[0] = 1;
    }
-   if(tab[col-1][lin][0] == pec[0]){
+   if(tab[lin-1][col][0] == pec[0]){
         verL[1] = 1;
+ 
    }
-   if(tab[col][lin+1][0] == pec[0]){
+   if(tab[lin][col+1][0] == pec[0]){
         verL[2] = 1;
+
    }
-   if(tab[col][lin-1][0] == pec[0]){
+   if(tab[lin][col-1][0] == pec[0]){
         verL[3] = 1;
+
    }
 
 
-   if(tab[col+1][lin][1] == pec[1]){
+   if(tab[lin+1][col][1] == pec[1]){
         verN[0] = 1;
    }
-   if(tab[col-1][lin][1] == pec[1]){
+   if(tab[lin-1][col][1] == pec[1]){
         verN[1] = 1;
    }
-   if(tab[col][lin+1][1] == pec[1]){
+   if(tab[lin][col+1][1] == pec[1]){
         verN[2] = 1;
    }
-   if(tab[col][lin-1][1] == pec[1]){
+   if(tab[lin][col-1][1] == pec[1]){
         verN[3] = 1;
    }
     
-   
    for(int i = 0; i < 4; i++){
 
     dir[i] = verL[i]^verN[i];
@@ -432,11 +437,11 @@ int jog_valida(int x, int y,char *pec,char ***tab){
    }
    for(int i = 0; i < 4 ; i++){
         
-        printf("L: %d, N: %d\n",verL[i],verN[i]);
+        //printf("L: %d, N: %d\n",verL[i],verN[i]);
 
         if(verL[i] == 1 && verN[i] == 1){
             
-           printf("ver2\n");
+          // printf("ver2\n");
             return ERRO;
         }
 
@@ -444,11 +449,11 @@ int jog_valida(int x, int y,char *pec,char ***tab){
 
    if(dir[0] == 1){
     int i = 1;
-    while(strcmp(tab[col+i][lin],"  ") != 0){
+    while(strcmp(tab[lin+i][col],"  ") != 0){
 
-        if(strcmp(tab[col+i][lin],pec) == 0){
+        if(strcmp(tab[lin+i][col],pec) == 0){
             
-            printf("ver3\n");
+            //printf("ver3\n");
             return ERRO;
 
         }
@@ -456,26 +461,72 @@ int jog_valida(int x, int y,char *pec,char ***tab){
     }
     if( i > 5){
         
-        printf("ver4\n");
+        //printf("ver4\n");
         return ERRO;
     }
+    int eqL = 0;
+    int eqN = 0;
+    if(i > 1 && tab[lin+1][col][0] == tab[lin+2][col][0]){
 
+        eqL = 1;
+    }
+    if(i > 1 && tab[lin+1][col][1] == tab[lin+2][col][1]){
+
+        eqN = 1;
+    }
+    if(eqL == 1){
+        if(pec[0] != tab[lin+1][col][0]){
+
+            return ERRO;
+        }
+
+    }
+     if(eqN == 1){
+        if(pec[1] != tab[lin+1][col][1]){
+
+            return ERRO;
+        }
+    }
+ 
    }
    if(dir[1] == 1){
 
     int i = 1;
-    while(strcmp(tab[col-i][lin],"  ") != 0){
+    while(strcmp(tab[lin-i][col],"  ") != 0){
 
-        if(strcmp(tab[col-i][lin],pec) == 0){
-            printf("ver5\n");
+        if(strcmp(tab[lin-i][col],pec) == 0){
+           // printf("ver5\n");
             return ERRO;
 
         }
         i++;
     }
     if( i > 5){
-        printf("ver6\n");
+        //printf("ver6\n");
         return ERRO;
+    }
+    int eqL = 0;
+    int eqN = 0;
+    if(i > 1 && tab[lin-1][col][0] == tab[lin-2][col][0]){
+
+        eqL = 1;
+    }
+    if(i > 1 && tab[lin-1][col][1] == tab[lin-2][col][1]){
+
+        eqN = 1;
+    }
+    if(eqL == 1){
+        if(pec[0] != tab[lin-1][col][0]){
+            //printf("verN0\n");
+            return ERRO;
+        }
+
+    }
+     if(eqN == 1){
+        if(pec[1] != tab[lin-1][col][1]){
+            //printf("verN1\n");
+            return ERRO;
+        }
     }
 
 
@@ -485,10 +536,10 @@ int jog_valida(int x, int y,char *pec,char ***tab){
 
 
     int i = 1;
-    while(strcmp(tab[col][lin+i],"  ") != 0){
+    while(strcmp(tab[lin][col+i],"  ") != 0){
 
-        if(strcmp(tab[col][lin+i],pec) == 0){
-            printf("ver7\n");
+        if(strcmp(tab[lin][col+i],pec) == 0){
+            //printf("ver7\n");
             return ERRO;
 
         }
@@ -496,8 +547,33 @@ int jog_valida(int x, int y,char *pec,char ***tab){
     }
     if( i > 5){
 
-        printf("ver8\n");
+        //printf("ver8\n");
         return ERRO;
+    }
+    int eqL = 0;
+    int eqN = 0;
+    if(i > 1 && tab[lin][col+1][0] == tab[lin][col+2][0]){
+        
+        eqL = 1;
+    }
+    if(i > 1 && tab[lin][col+1][1] == tab[lin][col+2][1]){
+
+        eqN = 1;
+    }
+    if(eqL == 1){
+        if(pec[0] != tab[lin][col+1][0]){
+            //printf("verN2\n");
+
+            return ERRO;
+        }
+
+    }
+     if(eqN == 1){
+        if(pec[1] != tab[lin][col+1][1]){
+             //printf("verN3\n");
+
+            return ERRO;
+        }
     }
 
 
@@ -505,23 +581,48 @@ int jog_valida(int x, int y,char *pec,char ***tab){
    if(dir[3] == 1){
 
     int i = 1;
-    while(strcmp(tab[col][lin-i],"  ") != 0){
+    while(strcmp(tab[lin][col-i],"  ") != 0){
 
-        if(strcmp(tab[col][lin-i],pec) == 0){
-            printf("ver9\n");
+        if(strcmp(tab[lin][col-i],pec) == 0){
+            //printf("ver9\n");
             return ERRO;
 
         }
         i++;
     }
     if( i > 5){
-        printf("ver10\n");
+        //printf("ver10\n");
         return ERRO;
+    }
+    int eqL = 0;
+    int eqN = 0;
+    if(i > 1 && tab[lin][col-1][0] == tab[lin][col-2][0]){
+
+        eqL = 1;
+    }
+    if(i > 1 && tab[lin][col-1][1] == tab[lin][col-2][1]){
+
+        eqN = 1;
+    }
+    if(eqL == 1){
+        if(pec[0] != tab[lin][col-1][0]){
+             //printf("verN4\n");
+
+            return ERRO;
+        }
+
+    }
+     if(eqN == 1){
+        if(pec[1] != tab[lin][col-1][1]){
+             //printf("verN5\n");
+            return ERRO;
+        }
     }
 
 
 
    }
+
     int tmp = 0;
     for(int i = 0; i < 4;i++){
         

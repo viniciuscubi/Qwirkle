@@ -30,7 +30,7 @@ int criar_tab(tab_def *tab_t){
     tab_t->prt_com = tab_dim/2 - 1;
     tab_t->prt_H = tab_dim/2 - 1;
 
-    printf("t_com: %d, t_H: %d, p_com: %d, p_H %d\n",tab_t->tab_com,tab_t->tab_H,tab_t->prt_com,tab_t->prt_H);
+    //printf("t_com: %d, t_H: %d, p_com: %d, p_H %d\n",tab_t->tab_com,tab_t->tab_H,tab_t->prt_com,tab_t->prt_H);
 
     for(int k = 0; k < tab_dim; k++){
 
@@ -45,7 +45,6 @@ int criar_tab(tab_def *tab_t){
     tab_t->lin_L =tab_dim/2-1;
     tab_t->col_L = tab_dim/2-1;
 
-    //tab_t->tab[tab_t->lin_L][tab_t->col_L] = "2B";
 
     return SUCESSO;
 
@@ -88,8 +87,8 @@ int exp_tab(tab_def *tab_t, int lin_L, int col_L){
     tab_t->tab_com = tab_dim/2 + 20;
     tab_t->prt_H = 27 + 10;
     tab_t->prt_com = 27 + 10;
-    //Apenas para teste
 */
+
     printf("\n");
     print_tab(tab_t->tab,tab_t->prt_H, tab_t->tab_H, tab_t->prt_com, tab_t->tab_com);
 
@@ -182,6 +181,7 @@ void print_tab(char ***tab,int prt_H, int tab_H,int prt_com,int tab_com){
     printf("\n");
  
 }
+//tirar
 void jogar(tab_def *tab_t, int lin, int col){
     
     lin += tab_dim/2 - 1;

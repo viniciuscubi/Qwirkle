@@ -69,6 +69,7 @@ while(1){
         tmp = ops(tab_t.tab,jog_j[j].pecs,pec_p.pecs, &tab_t.lin_L, &tab_t.col_L);
         printf("========================\n");
         exp_tab(&tab_t, tab_t.lin_L, tab_t.col_L);
+        printf("\nJogada de %s\n",jog_j[j].nome);
         printf("========================\n");
 
     }
