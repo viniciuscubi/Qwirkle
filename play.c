@@ -367,7 +367,7 @@ int ops(char ***tab,char **pecs_j, char **pecs,int *lin_l, int *col_l,int modo){
 
 
     }else if(strncmp(op,"passar",5) == 0){
-        printf("passar *******\n");
+        printf("passar\n");
         return PASSAR;//2 = passar
     }else{
         printf("inváldio\n");
@@ -799,6 +799,7 @@ void pontos(int *pontos,char ***tab,int lin_l, int col_l){
         pto += 6;
 
     }
+    
 
     //printf("pontos: %d\n",pto);
     *pontos = pto;
