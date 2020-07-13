@@ -6,6 +6,7 @@
 #define ERRO 0 
 #define SUCESSO 1
 #define PASSAR 2
+#define JOGADA 3
 
 typedef struct tab_t {
 

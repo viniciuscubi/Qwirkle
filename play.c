@@ -146,7 +146,7 @@ int dev_pecs(char *pec, char **pecs_j, char **pecs){
     return SUCESSO;
 }
 
-int ops(char ***tab,char **pecs_j, char **pecs,int *lin_l, int *col_l){
+int ops(char ***tab,char **pecs_j, char **pecs,int *lin_l, int *col_l,int modo){
 
     char op[100];
 
@@ -341,7 +341,7 @@ int ops(char ***tab,char **pecs_j, char **pecs,int *lin_l, int *col_l){
                 return ERRO;
             }else{
                 int r;
-                r = jogar_jog(x,y,pec,pecs_j,tab,lin_l,col_l);
+                r = jogar_jog(x,y,pec,pecs_j,tab,lin_l,col_l,modo);
 
                 if(r == 0){
 
@@ -350,7 +350,7 @@ int ops(char ***tab,char **pecs_j, char **pecs,int *lin_l, int *col_l){
                 }
                 
                 rep_pecs(pecs_j,pecs);
-                return SUCESSO;
+                return JOGADA;
             }
             
            // printf("pec: %s, x: %d, y: %d\n",pec,x,y);
@@ -641,7 +641,7 @@ int jog_valida(int x, int y,char *pec,char ***tab){
     }
 }
 
-int jogar_jog(int x, int y, char *pec, char **pecs_j, char ***tab,int *lin_l, int *col_l){
+int jogar_jog(int x, int y, char *pec, char **pecs_j, char ***tab,int *lin_l, int *col_l,int modo){
     
     int flag = 0;
     int i = 0;
@@ -654,7 +654,8 @@ int jogar_jog(int x, int y, char *pec, char **pecs_j, char ***tab,int *lin_l, in
 
         return ERRO;
     }
-
+    
+    if(modo == 2){
     //printf("jogar col: %d , lin %d\n",col,lin);
     for(i = 0; i < 6;  i++){
 
@@ -676,13 +677,23 @@ int jogar_jog(int x, int y, char *pec, char **pecs_j, char ***tab,int *lin_l, in
         strcpy(pecs_j[i],"--");
         *lin_l = lin;
         *col_l = col;
-
+    
     }else{
 
         return ERRO;
     }
 
+    }else if(modo == 1){
 
+    //printf("ver2\n");
+        strcpy(str,pec);
+        tab[lin][col] = str;
+        //printf("ver3\n");
+        strcpy(pecs_j[i],"--");
+        *lin_l = lin;
+        *col_l = col;
+
+    }
 
 
 }
@@ -699,4 +710,97 @@ void get_int(int *num){
     int i = 0;
 
 
+}
+
+void pontos(int *pontos,char ***tab,int lin_l, int col_l){
+    
+    int pto = *pontos;
+
+    int dir[4] = {0,0,0,0};
+
+    if(strcmp(tab[lin_l+1][col_l],"  ") != 0){
+
+        dir[0] = 1;
+
+    }
+    if(strcmp(tab[lin_l-1][col_l],"  ") != 0){
+
+        dir[1] = 1;
+
+    }
+    if(strcmp(tab[lin_l][col_l+1],"  ") != 0){
+
+        dir[2] = 1;
+        
+    }
+    if(strcmp(tab[lin_l][col_l-1],"  ") != 0){
+
+        dir[3] = 1;
+        
+    }
+
+    int i = 0;
+    while(dir[0] == 1 && strcmp(tab[lin_l+i][col_l],"  ") != 0){
+
+        //printf("ver1\n");
+        i++;
+
+    }
+
+    pto += i;
+
+    if(i == 6){
+
+        pto += 6;
+
+    }
+
+    i = 0;
+    while(dir[1] == 1 && strcmp(tab[lin_l-i][col_l],"  ") != 0){
+        
+        //printf("ver2\n");
+        i++;
+
+    }
+
+    pto += i;
+
+    if(i == 6){
+
+        pto += 6;
+
+    }
+
+    i = 0;
+    while(dir[2] == 1 && strcmp(tab[lin_l][col_l+i],"  ") != 0){
+
+        //printf("ver3\n");
+        i++;
+    }
+
+    pto += i;
+
+    if(i == 6){
+
+        pto += 6;
+
+    }
+
+    i = 0;
+    while(dir[3] == 1 && strcmp(tab[lin_l][col_l-i],"  ") != 0){
+        //printf("ver4\n");
+        i++;
+    }
+
+    pto += i;
+
+    if(i == 6){
+
+        pto += 6;
+
+    }
+
+    //printf("pontos: %d\n",pto);
+    *pontos = pto;
+    //printf("pontos func: %d\n",*pontos);
 }
