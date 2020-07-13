@@ -81,6 +81,7 @@ while(end){
     int tcol = 0;
     int tlin = 0;
     int tmp  = 0;
+    int ctn = 0;
     while(tmp != PASSAR){
         printf("Opções: Jogar P1 x y | passar | trocar P1 P2...P6\n");
         tmp = ops(tab_t.tab,jog_j[j].pecs,pec_p.pecs, &tab_t.lin_L, &tab_t.col_L, modo);
@@ -88,13 +89,23 @@ while(end){
         if(tmp == JOGADA && flag == 0){
             tcol = tab_t.col_L;
             tlin = tab_t.lin_L;
-
+            
             flag  = 1;
+        }
+        if(tmp == JOGADA){
+    
+            ctn++;
         }
 
         if(tmp == PASSAR && flag == 1){
 
             pontos(&jog_j[j].pontos,tab_t.tab,tlin, tcol);
+            
+            if(tlin == ( 0 + tab_dim/2 -1) && tcol == (0 + tab_dim/2 -1) && ctn == 1){
+                
+                jog_j[j].pontos += 1;
+            }
+
         }    
 
         printf("========================\n");
